@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:easy_dialog/easy_dialog.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_money/providers/goal_provider.dart';
 import 'package:safe_money/services/local_transaction_service.dart';
 
 showMyDialog(context, title, ok, cancel, type) async {
   TextStyle ts = TextStyle(
     fontSize: 15,
-    // color: Theme.of(context).textTheme.body1.color,
   );
   TextStyle tsTitle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.bold,
-    // color: Theme.of(context).textTheme.body1.color,
   );
   TextEditingController textEditingController = TextEditingController();
 
   bool _result = false;
   await EasyDialog(
       height: 200,
-      // cardColor: Theme.of(context).appBarTheme.color,
       closeButton: false,
       title: Text(title, style: tsTitle),
-      // description: Text(descreption),
       contentList: [
         TextField(
           controller: textEditingController,
@@ -37,12 +35,21 @@ showMyDialog(context, title, ok, cancel, type) async {
                 style: ts,
               ),
               onPressed: () async {
-                var transaction = {
-                  "datetime": DateTime.now().toString(),
+                DateTime now = DateTime.now();
+                String formatedDate = '${now.day}.${now.month}.${now.year}';
+                String formatedTime = '${now.hour}:${now.minute}';
+
+                Map<String, dynamic> transaction = {
+                  "datetime": now.toString(),
+                  "date": formatedDate,
+                  "time": formatedTime,
                   "sum": textEditingController.text,
                   "type": type
                 };
                 await LocalTransactionService.addTransaction(transaction);
+                await Provider.of<GoalProvider>(context, listen: false)
+                    .addTransaction(transaction);
+
                 _result = true;
                 Navigator.of(context).pop();
               },

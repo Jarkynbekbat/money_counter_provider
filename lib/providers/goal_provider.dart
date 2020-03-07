@@ -10,7 +10,8 @@ class GoalProvider extends ChangeNotifier {
   int goalSum;
   int haveSum;
   int needSum;
-  List<Map<String, dynamic>> transations = [];
+  List<dynamic> transations = [];
+  Map<String, dynamic> object = {};
 
   GoalProvider() {
     initData();
@@ -18,21 +19,59 @@ class GoalProvider extends ChangeNotifier {
 
   Future<bool> saveGoal({String name, int goalSum}) async {
     if (name.isNotEmpty && !goalSum.isNaN) {
-      Map<String, dynamic> goal = {
+      object = {
         "name": name,
         "goalSum": goalSum,
         "haveSum": haveSum ?? 0,
         "needSum": needSum ?? goalSum,
       };
-      return await LocalGoalService.setGoal(json.encode(goal));
+      return await LocalGoalService.setGoal(json.encode(object));
     } else
       return false;
   }
 
-  Future<bool> initData() async {
-    var temp = await LocalTransactionService.getTransactions();
+  initData() async {
+    String objStr = await LocalGoalService.getGoal();
+    object = json.decode(objStr);
+    this.name = object['name'];
+    this.haveSum = object['haveSum'];
+    this.needSum = object['needSum'];
 
-    // this.transations = temp.map((el) => json.decode(el));
+    List<String> transations =
+        await LocalTransactionService.getTransactions() ?? [];
+    this.transations = transations.map((el) => json.decode(el)).toList();
+    notifyListeners();
+  }
+
+  addTransaction(Map<String, dynamic> transaction) async {
+    try {
+      if (transaction['type'] == '+') {
+        this.haveSum += int.parse(transaction['sum']);
+        this.needSum -= int.parse(transaction['sum']);
+      } else {
+        this.haveSum -= int.parse(transaction['sum']);
+        this.needSum += int.parse(transaction['sum']);
+      }
+
+      object['haveSum'] = this.haveSum;
+      object['needSum'] = this.needSum;
+      this.transations.insert(0, transaction);
+      LocalGoalService.setGoal(json.encode(object));
+    } catch (ex) {
+      // TODO поставить снейк сообщение
+      print(ex.message);
+    }
+    notifyListeners();
+  }
+
+  deleteTransaction(Map<String, dynamic> transaction) async {
+    // this.transations.add(transaction);
+    // this.haveSum += int.parse(transaction['sum']);
+    // this.needSum -= int.parse(transaction['sum']);
+
+    // object['haveSum'] = this.haveSum;
+    // object['needSum'] = this.needSum;
+    // await LocalGoalService.setGoal(json.encode(object));
     notifyListeners();
   }
 }
