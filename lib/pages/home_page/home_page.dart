@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_money/helpers/my_colors.dart';
 import 'package:safe_money/pages/home_page/tabs/calc_tab.dart';
 import 'package:safe_money/pages/home_page/tabs/statistic_tab.dart';
 
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           appBar: AppBar(
             title: Text('Батыров Талгат'),
+            backgroundColor: MyColors.color4,
             actions: [
               IconButton(icon: Icon(Icons.exit_to_app), onPressed: () {})
             ],

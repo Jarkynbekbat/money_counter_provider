@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:safe_money/services/local_goal_service.dart';
 import 'package:safe_money/services/local_transaction_service.dart';
 
 class GoalProvider extends ChangeNotifier {
-  DateTime date;
   String name;
   int goalSum;
   int haveSum;
@@ -20,6 +20,8 @@ class GoalProvider extends ChangeNotifier {
   Future<bool> saveGoal({String name, int goalSum}) async {
     if (name.isNotEmpty && !goalSum.isNaN) {
       object = {
+        "goalDatetime": DateTime.now().toString(),
+        "goalSumStatic": goalSum,
         "name": name,
         "goalSum": goalSum,
         "haveSum": haveSum ?? 0,
@@ -43,23 +45,31 @@ class GoalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addTransaction(Map<String, dynamic> transaction) async {
+  addTransaction(Map<String, dynamic> transaction, scaffoldKey) async {
     try {
       if (transaction['type'] == '+') {
         this.haveSum += int.parse(transaction['sum']);
         this.needSum -= int.parse(transaction['sum']);
+        if (this.haveSum >= this.needSum) {
+          final snackBar = SnackBar(content: Text('ЦЕЛЬ ДОСТИГНУТА!'));
+          scaffoldKey.currentState.showSnackBar(snackBar);
+        }
       } else {
-        this.haveSum -= int.parse(transaction['sum']);
-        this.needSum += int.parse(transaction['sum']);
+        if (this.haveSum < int.parse(transaction['sum'])) {
+          final snackBar = SnackBar(content: Text('НЕДОСТАТОЧНО ДЕНЕГ...'));
+          scaffoldKey.currentState.showSnackBar(snackBar);
+        } else {
+          this.haveSum -= int.parse(transaction['sum']);
+          this.needSum += int.parse(transaction['sum']);
+        }
       }
-
       object['haveSum'] = this.haveSum;
       object['needSum'] = this.needSum;
       this.transations.insert(0, transaction);
       LocalGoalService.setGoal(json.encode(object));
     } catch (ex) {
-      // TODO поставить снейк сообщение
-      print(ex.message);
+      final snackBar = SnackBar(content: Text('${ex.message}'));
+      scaffoldKey.currentState.showSnackBar(snackBar);
     }
     notifyListeners();
   }

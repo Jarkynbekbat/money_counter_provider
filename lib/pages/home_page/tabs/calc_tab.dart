@@ -5,7 +5,6 @@ import 'package:safe_money/helpers/my_colors.dart';
 import 'package:safe_money/helpers/my_simple_dialog.dart';
 import 'package:safe_money/helpers/screen.dart';
 import 'package:safe_money/providers/goal_provider.dart';
-import 'package:safe_money/services/local_transaction_service.dart';
 
 class CalcTab extends StatefulWidget {
   @override
@@ -13,9 +12,12 @@ class CalcTab extends StatefulWidget {
 }
 
 class _CalcTabState extends State<CalcTab> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: MyColors.color1,
         body: Consumer<GoalProvider>(
           builder: (context, goalProvider, _) {
@@ -57,32 +59,34 @@ class _CalcTabState extends State<CalcTab> {
                     Container(
                       width: Screen.width(context) * 0.7,
                       height: Screen.heigth(context) * 0.56,
-                      color: MyColors.color2,
+                      color: MyColors.color3,
                       child: SingleChildScrollView(
                         child: Column(
-                          children: List<Widget>.generate(
-                            goalProvider.transations.length,
-                            (index) {
-                              return ListTile(
-                                leading: goalProvider.transations[index]
-                                            ['type'] ==
-                                        "+"
-                                    ? Icon(Icons.add)
-                                    : Icon(Icons.remove),
-                                title: Wrap(
-                                    alignment: WrapAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                          '${goalProvider.transations[index]['date']}'),
-                                      Text(
-                                          '${goalProvider.transations[index]['sum']} сом'),
-                                    ]),
-                                subtitle: Text(
-                                    goalProvider.transations[index]['time']),
-                              );
-                            },
-                          ),
-                        ),
+                            children: goalProvider.transations.length != 0
+                                ? List<Widget>.generate(
+                                    goalProvider.transations.length,
+                                    (index) {
+                                      return ListTile(
+                                        leading: goalProvider.transations[index]
+                                                    ['type'] ==
+                                                "+"
+                                            ? Icon(Icons.arrow_downward)
+                                            : Icon(Icons.arrow_upward),
+                                        title: Wrap(
+                                            alignment:
+                                                WrapAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  '${goalProvider.transations[index]['date']}'),
+                                              Text(
+                                                  '${goalProvider.transations[index]['sum']} сом'),
+                                            ]),
+                                        subtitle: Text(goalProvider
+                                            .transations[index]['time']),
+                                      );
+                                    },
+                                  )
+                                : [Text('НЕТ ОПЕРАЦИЙ')]),
                       ),
                     ),
                   ],
@@ -96,20 +100,13 @@ class _CalcTabState extends State<CalcTab> {
           children: [
             FloatingActionRowButton(
               icon: Icon(Icons.add),
-              onTap: () =>
-                  showMyDialog(context, 'положить деньги', 'ок', 'отмена', '+'),
+              onTap: () => showMyDialog(context, 'положить деньги', 'ок',
+                  'отмена', '+', _scaffoldKey),
             ),
             FloatingActionRowButton(
               icon: Icon(Icons.remove),
-              onTap: () =>
-                  showMyDialog(context, 'взять деньги', 'ок', 'отмена', '-'),
-            ),
-            FloatingActionRowButton(
-              icon: Icon(Icons.clear),
-              onTap: () async {
-                await LocalTransactionService.clearTransactions();
-                setState(() {});
-              },
+              onTap: () => showMyDialog(
+                  context, 'взять деньги', 'ок', 'отмена', '-', _scaffoldKey),
             ),
           ],
         ));

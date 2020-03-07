@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:safe_money/providers/goal_provider.dart';
 import 'package:safe_money/services/local_transaction_service.dart';
 
-showMyDialog(context, title, ok, cancel, type) async {
+showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
   TextStyle ts = TextStyle(
     fontSize: 15,
   );
@@ -48,7 +48,7 @@ showMyDialog(context, title, ok, cancel, type) async {
                 };
                 await LocalTransactionService.addTransaction(transaction);
                 await Provider.of<GoalProvider>(context, listen: false)
-                    .addTransaction(transaction);
+                    .addTransaction(transaction, scaffoldKey);
 
                 _result = true;
                 Navigator.of(context).pop();
