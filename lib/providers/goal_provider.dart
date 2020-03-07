@@ -21,7 +21,6 @@ class GoalProvider extends ChangeNotifier {
     if (name.isNotEmpty && !goalSum.isNaN) {
       object = {
         "goalDatetime": DateTime.now().toString(),
-        "goalSumStatic": goalSum,
         "name": name,
         "goalSum": goalSum,
         "haveSum": haveSum ?? 0,
@@ -34,14 +33,18 @@ class GoalProvider extends ChangeNotifier {
 
   initData() async {
     String objStr = await LocalGoalService.getGoal();
-    object = json.decode(objStr);
-    this.name = object['name'];
-    this.haveSum = object['haveSum'];
-    this.needSum = object['needSum'];
+    if (objStr != null) {
+      object = json.decode(objStr);
 
-    List<String> transations =
-        await LocalTransactionService.getTransactions() ?? [];
-    this.transations = transations.map((el) => json.decode(el)).toList();
+      this.name = object['name'];
+      this.haveSum = object['haveSum'];
+      this.needSum = object['needSum'];
+
+      List<String> transations =
+          await LocalTransactionService.getTransactions() ?? [];
+      this.transations = transations.map((el) => json.decode(el)).toList();
+    }
+
     notifyListeners();
   }
 
@@ -51,6 +54,7 @@ class GoalProvider extends ChangeNotifier {
         this.haveSum += int.parse(transaction['sum']);
         this.needSum -= int.parse(transaction['sum']);
         if (this.haveSum >= this.needSum) {
+          this.needSum = 0;
           final snackBar = SnackBar(content: Text('ЦЕЛЬ ДОСТИГНУТА!'));
           scaffoldKey.currentState.showSnackBar(snackBar);
         }
@@ -83,5 +87,10 @@ class GoalProvider extends ChangeNotifier {
     // object['needSum'] = this.needSum;
     // await LocalGoalService.setGoal(json.encode(object));
     notifyListeners();
+  }
+
+  logout() async {
+    var temp = await LocalGoalService.deleteGoal();
+    await LocalTransactionService.clearTransactions();
   }
 }

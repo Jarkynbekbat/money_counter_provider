@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:safe_money/helpers/my_colors.dart';
 import 'package:safe_money/helpers/screen.dart';
 import 'package:safe_money/providers/goal_provider.dart';
+import 'package:safe_money/services/local_goal_service.dart';
 
 class FirstPage extends StatelessWidget {
   final TextEditingController goalNameController = TextEditingController();
@@ -10,6 +11,9 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalGoalService.getGoal().then((obj) {
+      if (obj != null) Navigator.of(context).pushReplacementNamed('/home');
+    });
     return Scaffold(
       backgroundColor: MyColors.color1,
       body: Center(
@@ -55,6 +59,7 @@ class FirstPage extends StatelessWidget {
               name: goalNameController.text,
               goalSum: int.parse(goalSumController.text),
             );
+            // Provider.of<GoalProvider>(context, listen: false).initData();
             Navigator.of(context).pushReplacementNamed('/home');
           } catch (ex) {
             if (ex.message == "Invalid radix-10 number") {
