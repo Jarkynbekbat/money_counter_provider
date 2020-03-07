@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:safe_money/pages/home_page/tabs/calc_tab.dart';
+import 'package:safe_money/pages/home_page/tabs/statistic_tab.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Батыров Талгат'),
+            actions: [
+              IconButton(icon: Icon(Icons.exit_to_app), onPressed: () {})
+            ],
+            bottom: TabBar(
+              tabs: [
+                Tab(text: 'УЧЕТ'),
+                Tab(text: 'СТАТИСТИКА'),
+              ],
+            ),
+          ),
+          body: TabBarView(children: [
+            CalcTab(),
+            StatisticTab(),
+          ])),
+    );
+  }
+}
