@@ -62,8 +62,7 @@ class FirstPage extends StatelessWidget {
         backgroundColor: MyColors.color4,
         onPressed: () async {
           try {
-            bool test = await Provider.of<GoalProvider>(context, listen: false)
-                .saveGoal(
+            await Provider.of<GoalProvider>(context, listen: false).saveGoal(
               name: goalNameController.text,
               goalSum: int.parse(goalSumController.text),
             );

@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Батыров Талгат'),
+            title: Text('Учет накопления'),
             backgroundColor: MyColors.color4,
             actions: [
               IconButton(

@@ -14,9 +14,9 @@ dependencies:
   floating_action_row: ^0.1.0
   shared_preferences: ^0.5.6
   easy_dialog:
-  sqflite: ^1.2.0
   path_provider: ^1.6.0
   pie_chart:
+  fl_animated_linechart: ^1.1.1
 
   cupertino_icons: ^0.1.2
 

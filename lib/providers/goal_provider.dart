@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_money/services/local_goal_service.dart';
@@ -29,7 +28,6 @@ class GoalProvider extends ChangeNotifier {
           await LocalTransactionService.getTransactions() ?? [];
       this.transations = transations.map((el) => json.decode(el)).toList();
     }
-    print('initData()');
     notifyListeners();
   }
 
@@ -73,7 +71,7 @@ class GoalProvider extends ChangeNotifier {
       this.transations.insert(0, transaction);
       LocalGoalService.setGoal(json.encode(object));
     } catch (ex) {
-      final snackBar = SnackBar(content: Text('${ex}'));
+      final snackBar = SnackBar(content: Text('${ex.message}'));
       scaffoldKey.currentState.showSnackBar(snackBar);
     }
     notifyListeners();
