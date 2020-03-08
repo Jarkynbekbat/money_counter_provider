@@ -14,6 +14,7 @@ class FirstPage extends StatelessWidget {
     LocalGoalService.getGoal().then((obj) {
       if (obj != null) Navigator.of(context).pushReplacementNamed('/home');
     });
+
     return Scaffold(
       backgroundColor: MyColors.color1,
       body: Center(
@@ -31,7 +32,10 @@ class FirstPage extends StatelessWidget {
                       width: Screen.width(context) * 0.7,
                       child: TextField(
                         controller: goalNameController,
-                        decoration: InputDecoration(hintText: 'введите цель'),
+                        decoration: InputDecoration(
+                          hintText: 'введите цель',
+                          labelText: 'цель',
+                        ),
                       ),
                     ),
                   ),
@@ -41,7 +45,10 @@ class FirstPage extends StatelessWidget {
                       width: Screen.width(context) * 0.7,
                       child: TextField(
                         controller: goalSumController,
-                        decoration: InputDecoration(hintText: 'введите сумму'),
+                        decoration: InputDecoration(
+                          hintText: 'введите сумму',
+                          labelText: 'cумма',
+                        ),
                       ),
                     ),
                   )
@@ -53,9 +60,10 @@ class FirstPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.color4,
-        onPressed: () {
+        onPressed: () async {
           try {
-            Provider.of<GoalProvider>(context, listen: false).saveGoal(
+            bool test = await Provider.of<GoalProvider>(context, listen: false)
+                .saveGoal(
               name: goalNameController.text,
               goalSum: int.parse(goalSumController.text),
             );

@@ -4,7 +4,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -14,6 +14,9 @@ dependencies:
   floating_action_row: ^0.1.0
   shared_preferences: ^0.5.6
   easy_dialog:
+  sqflite: ^1.2.0
+  path_provider: ^1.6.0
+  pie_chart:
 
   cupertino_icons: ^0.1.2
 

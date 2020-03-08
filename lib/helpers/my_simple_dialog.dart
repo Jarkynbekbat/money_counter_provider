@@ -14,7 +14,6 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
   );
   TextEditingController textEditingController = TextEditingController();
 
-  bool _result = false;
   await EasyDialog(
       height: 200,
       closeButton: false,
@@ -35,23 +34,27 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
                 style: ts,
               ),
               onPressed: () async {
-                DateTime now = DateTime.now();
-                String formatedDate = '${now.day}.${now.month}.${now.year}';
-                String formatedTime = '${now.hour}:${now.minute}';
-
-                Map<String, dynamic> transaction = {
-                  "datetime": now.toString(),
-                  "date": formatedDate,
-                  "time": formatedTime,
-                  "sum": textEditingController.text,
-                  "type": type
-                };
-                await LocalTransactionService.addTransaction(transaction);
-                await Provider.of<GoalProvider>(context, listen: false)
-                    .addTransaction(transaction, scaffoldKey);
-
-                _result = true;
-                Navigator.of(context).pop();
+                try {
+                  DateTime now = DateTime.now();
+                  String formatedDate = '${now.day}.${now.month}.${now.year}';
+                  String formatedTime = '${now.hour}:${now.minute}';
+                  int.parse(textEditingController.text);
+                  Map<String, dynamic> transaction = {
+                    "datetime": now.toString(),
+                    "date": formatedDate,
+                    "time": formatedTime,
+                    "sum": textEditingController.text,
+                    "type": type
+                  };
+                  await LocalTransactionService.addTransaction(transaction);
+                  await Provider.of<GoalProvider>(context, listen: false)
+                      .addTransaction(transaction, scaffoldKey);
+                  Navigator.of(context).pop();
+                } catch (ex) {
+                  final snackBar = SnackBar(content: Text('ВВЕДИТЕ ЧИСЛО...'));
+                  scaffoldKey.currentState.showSnackBar(snackBar);
+                  Navigator.of(context).pop();
+                }
               },
             ),
             Container(
@@ -64,7 +67,6 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
                   style: ts,
                 ),
                 onPressed: () {
-                  _result = false;
                   Navigator.of(context).pop();
                 },
               ),
@@ -73,5 +75,5 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
         )
       ]).show(context);
 
-  return _result;
+  return true;
 }
