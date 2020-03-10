@@ -83,14 +83,15 @@ class _CalcTabState extends State<CalcTab> {
                     ),
                     SizedBox(height: 40),
                     Container(
-                      decoration: BoxDecoration(
-                        color: MyColors.color3,
-                        borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(20.0),
-                          topRight: const Radius.circular(20.0),
-                        ),
-                      ),
-                      width: Screen.width(context) * 0.8,
+                      color: MyColors.color3,
+                      // decoration: BoxDecoration(
+                      //   color: MyColors.color3,
+                      //   borderRadius: BorderRadius.only(
+                      //     topLeft: const Radius.circular(20.0),
+                      //     topRight: const Radius.circular(20.0),
+                      //   ),
+                      // ),
+                      width: Screen.width(context) * 0.85,
                       height: Screen.heigth(context) * 0.46,
                       child: SingleChildScrollView(
                         child: Column(
@@ -125,14 +126,20 @@ class _CalcTabState extends State<CalcTab> {
                                                 Text(
                                                   '${goalProvider.transations[index]['date']}',
                                                   style: TextStyle(
-                                                    color: MyColors.color4,
+                                                    color: Colors.black54,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 Text(
                                                   '${goalProvider.transations[index]['type']}${goalProvider.transations[index]['sum']} сом',
                                                   style: TextStyle(
-                                                    color: MyColors.color4,
+                                                    color:
+                                                        goalProvider.transations[
+                                                                        index]
+                                                                    ['type'] ==
+                                                                '+'
+                                                            ? Colors.green
+                                                            : Colors.red,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
