@@ -38,26 +38,57 @@ class _CalcTabState extends State<CalcTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'ВАША ЦЕЛЬ     : ' + goalProvider.name,
+                                'ВАША ЦЕЛЬ',
                                 style: TextStyle(fontSize: 18),
                               ),
-                              SizedBox(height: 5),
                               Text(
-                                'СУММА ЦЕЛИ : ' +
-                                    goalProvider.goalSum.toString() +
-                                    '\n',
+                                'СУММА ЦЕЛИ',
                                 style: TextStyle(fontSize: 18),
                               ),
-                              SizedBox(height: 5),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 1,
+                                width: 120,
+                                color: MyColors.color2,
+                              ),
                               Text(
-                                'НАКОПЛЕНО    : ' +
-                                    goalProvider.haveSum.toString(),
+                                'НАКОПЛЕНО',
                                 style: TextStyle(fontSize: 18),
                               ),
-                              SizedBox(height: 5),
                               Text(
-                                'ОСТАЛОСЬ       : ' +
-                                    goalProvider.needSum.toString(),
+                                'ОСТАЛОСЬ',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 5, right: 5),
+                            height: 100,
+                            width: 1,
+                            color: MyColors.color2,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                goalProvider.name,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                goalProvider.goalSum.toString(),
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 1,
+                                width: 40,
+                                color: MyColors.color2,
+                              ),
+                              Text(
+                                goalProvider.haveSum.toString(),
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                goalProvider.needSum.toString(),
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],

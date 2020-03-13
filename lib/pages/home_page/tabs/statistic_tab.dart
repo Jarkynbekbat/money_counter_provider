@@ -25,6 +25,7 @@ class _StatisticTabState extends State<StatisticTab> {
 
     //вычисляю график для фактических накоплений
     var transations = Provider.of<GoalProvider>(context).transations;
+
     Map<DateTime, double> objectFact = {};
     double sumFact = 0;
     transations.forEach((t) {
