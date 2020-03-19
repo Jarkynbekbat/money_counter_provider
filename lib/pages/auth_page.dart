@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_money/helpers/my_colors.dart';
 import 'package:safe_money/helpers/screen.dart';
+import 'package:safe_money/pages/home_page/home_page.dart';
 import 'package:safe_money/providers/goal_provider.dart';
-import 'package:safe_money/services/local_goal_service.dart';
 
-class FirstPage extends StatelessWidget {
+class AuthPage extends StatelessWidget {
+  static String route = 'auth';
   final TextEditingController goalNameController = TextEditingController();
   final TextEditingController goalSumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    LocalGoalService.getGoal().then((obj) {
-      if (obj != null) Navigator.of(context).pushReplacementNamed('/home');
-    });
-
     return Scaffold(
       backgroundColor: MyColors.color1,
       body: Center(
@@ -27,28 +24,25 @@ class FirstPage extends StatelessWidget {
             child: Center(
               child: Wrap(
                 children: <Widget>[
-                  Center(
-                    child: SizedBox(
-                      width: Screen.width(context) * 0.7,
-                      child: TextField(
-                        controller: goalNameController,
-                        decoration: InputDecoration(
-                          hintText: 'введите цель',
-                          labelText: 'цель',
-                        ),
+                  SizedBox(
+                    width: Screen.width(context) * 0.7,
+                    child: TextField(
+                      controller: goalNameController,
+                      decoration: InputDecoration(
+                        hintText: 'введите цель',
+                        labelText: 'цель',
                       ),
                     ),
                   ),
                   SizedBox(height: 70),
-                  Center(
-                    child: SizedBox(
-                      width: Screen.width(context) * 0.7,
-                      child: TextField(
-                        controller: goalSumController,
-                        decoration: InputDecoration(
-                          hintText: 'введите сумму',
-                          labelText: 'cумма',
-                        ),
+                  SizedBox(
+                    width: Screen.width(context) * 0.7,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: goalSumController,
+                      decoration: InputDecoration(
+                        hintText: 'введите сумму',
+                        labelText: 'cумма',
                       ),
                     ),
                   )
@@ -67,7 +61,7 @@ class FirstPage extends StatelessWidget {
               goalSum: int.parse(goalSumController.text),
             );
             // Provider.of<GoalProvider>(context, listen: false).initData();
-            Navigator.of(context).pushReplacementNamed('/home');
+            Navigator.of(context).pushReplacementNamed(HomePage.route);
           } catch (ex) {
             if (ex.message == "Invalid radix-10 number") {
               print('введите число');
