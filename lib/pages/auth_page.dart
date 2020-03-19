@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_money/helpers/my_colors.dart';
 import 'package:safe_money/helpers/screen.dart';
-import 'package:safe_money/pages/home_page/home_page.dart';
+import 'package:safe_money/pages/home_page.dart';
 import 'package:safe_money/providers/goal_provider.dart';
 
 class AuthPage extends StatelessWidget {
@@ -56,6 +56,7 @@ class AuthPage extends StatelessWidget {
         backgroundColor: MyColors.color4,
         onPressed: () async {
           try {
+            // TODO - решить проблему с старыми данными после выхода
             await Provider.of<GoalProvider>(context, listen: false).saveGoal(
               name: goalNameController.text,
               goalSum: int.parse(goalSumController.text),

@@ -6,9 +6,11 @@ import 'package:safe_money/services/local_transaction_service.dart';
 
 class GoalProvider extends ChangeNotifier {
   String name;
+
   int goalSum;
   int haveSum;
   int needSum;
+  double precent = 0;
   List<dynamic> transations = [];
   Map<String, dynamic> object = {};
 
@@ -24,6 +26,7 @@ class GoalProvider extends ChangeNotifier {
       this.goalSum = object['goalSum'];
       this.haveSum = object['haveSum'];
       this.needSum = object['needSum'];
+      this.precent = (this.haveSum / this.goalSum * 100) * 100;
       List<String> transations =
           await LocalTransactionService.getTransactions() ?? [];
       this.transations = transations.map((el) => json.decode(el)).toList();
@@ -66,9 +69,10 @@ class GoalProvider extends ChangeNotifier {
           this.needSum += int.parse(transaction['sum']);
         }
       }
+      this.precent = this.haveSum / this.goalSum * 100;
       object['haveSum'] = this.haveSum;
       object['needSum'] = this.needSum;
-      this.transations.insert(0, transaction);
+      this.transations.add(transaction);
       LocalGoalService.setGoal(json.encode(object));
     } catch (ex) {
       final snackBar = SnackBar(content: Text('${ex.message}'));
@@ -77,7 +81,7 @@ class GoalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteTransaction(Map<String, dynamic> transaction) async {
+  cancelTransaction(Map<String, dynamic> transaction) async {
     if (transaction['type'] == '+') {
       this.haveSum -= int.parse(transaction['sum']);
       this.needSum += int.parse(transaction['sum']);
@@ -87,12 +91,13 @@ class GoalProvider extends ChangeNotifier {
     }
     object['haveSum'] = this.haveSum;
     object['needSum'] = this.needSum;
+    this.precent = this.haveSum / this.goalSum * 100;
+
     await LocalGoalService.setGoal(json.encode(object));
     await LocalTransactionService.deleteTransaction(transaction['datetime']);
     this
         .transations
         .removeWhere((el) => el['datetime'] == transaction['datetime']);
-
     notifyListeners();
   }
 

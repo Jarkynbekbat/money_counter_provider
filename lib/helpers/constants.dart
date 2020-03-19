@@ -7,3 +7,8 @@ const roundedContainerDecoration = BoxDecoration(
     topRight: Radius.circular(30),
   ),
 );
+
+const textStyle = TextStyle(
+  fontSize: 18.0,
+  fontWeight: FontWeight.bold,
+);
