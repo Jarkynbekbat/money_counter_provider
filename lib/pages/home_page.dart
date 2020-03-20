@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                     color: MyColors.color3,
                     child: Container(
                       decoration: roundedContainerDecoration.copyWith(
-                        color: MyColors.color1,
+                        color: Colors.white,
                       ),
                       child: ListView.builder(
                         reverse: true,

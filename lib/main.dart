@@ -22,7 +22,7 @@ void main() async {
         appBarTheme: AppBarTheme(
           color: MyColors.color3,
         ),
-        scaffoldBackgroundColor: MyColors.color1,
+        scaffoldBackgroundColor: Colors.white,
       ),
       title: 'Учет денег',
       routes: <String, WidgetBuilder>{
