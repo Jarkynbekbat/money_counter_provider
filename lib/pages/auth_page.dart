@@ -56,7 +56,6 @@ class AuthPage extends StatelessWidget {
         backgroundColor: MyColors.color4,
         onPressed: () async {
           try {
-            // TODO - решить проблему с старыми данными после выхода
             await Provider.of<GoalProvider>(context, listen: false).saveGoal(
               name: goalNameController.text,
               goalSum: int.parse(goalSumController.text),

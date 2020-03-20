@@ -12,3 +12,9 @@ const textStyle = TextStyle(
   fontSize: 18.0,
   fontWeight: FontWeight.bold,
 );
+
+const statisticCountStyle = TextStyle(
+  fontSize: 25.0,
+  color: Colors.green,
+  fontWeight: FontWeight.bold,
+);

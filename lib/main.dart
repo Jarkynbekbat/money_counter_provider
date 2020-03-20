@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_money/helpers/my_colors.dart';
+import 'package:safe_money/pages/about_page.dart';
 import 'package:safe_money/pages/auth_page.dart';
 import 'package:safe_money/pages/statistic_page.dart';
 import 'package:safe_money/providers/goal_provider.dart';
@@ -16,12 +18,18 @@ void main() async {
       ChangeNotifierProvider(create: (_) => GoalProvider()),
     ],
     child: MaterialApp(
-      //TODO задать дизайн через тему
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          color: MyColors.color3,
+        ),
+        scaffoldBackgroundColor: MyColors.color1,
+      ),
       title: 'Учет денег',
       routes: <String, WidgetBuilder>{
         //создаю роуты приложения
         AuthPage.route: (BuildContext context) => AuthPage(),
         HomePage.route: (BuildContext context) => HomePage(),
+        AboutPage.route: (BuildContext context) => AboutPage(),
         StatisticPage.route: (BuildContext context) => StatisticPage(),
       },
       home: startPage,

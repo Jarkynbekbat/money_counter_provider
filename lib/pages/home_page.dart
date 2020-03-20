@@ -1,4 +1,3 @@
-import 'package:easy_dialog/easy_dialog.dart';
 import 'package:floating_action_row/floating_action_row.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -6,8 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:safe_money/helpers/constants.dart';
 import 'package:safe_money/helpers/my_colors.dart';
 import 'package:safe_money/helpers/my_simple_dialog.dart';
-import 'package:safe_money/pages/auth_page.dart';
-import 'package:safe_money/pages/statistic_page.dart';
+import 'package:safe_money/pages/components/drawer.dart';
 import 'package:safe_money/providers/goal_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,54 +20,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
+      drawer: MyDrawer(),
       appBar: AppBar(
         title: Text('Мой учет'),
-        centerTitle: true,
-        backgroundColor: MyColors.color3,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.insert_chart),
-            onPressed: () async {
-              //TODO сделать дизайн экрана статистики
-              Navigator.pushNamed(context, StatisticPage.route);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () async {
-              await EasyDialog(
-                  title: Text('Вы уверены что хотите прервать учет ?'),
-                  height: 200,
-                  closeButton: false,
-                  contentList: [
-                    OutlineButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      child: Text(
-                        'да,прервать',
-                      ),
-                      onPressed: () {
-                        // TODO - исправить проблему с страрыми данными после выхода
-                        Provider.of<GoalProvider>(context, listen: false)
-                            .logout();
-                        Navigator.of(context).popAndPushNamed(AuthPage.route);
-                      },
-                    ),
-                    OutlineButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      child: Text(
-                        'нет,вернуться',
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ]).show(context);
-            },
-          ),
-        ],
+        actions: [],
       ),
       body: Consumer<GoalProvider>(
         builder: (context, goalProvider, _) {
@@ -84,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       CircularPercentIndicator(
                         radius: 120.0,
-                        lineWidth: 10.0,
+                        lineWidth: 12.0,
                         animation: true,
                         header: Text(
                           "Накоплено",
@@ -102,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       CircularPercentIndicator(
                         radius: 120.0,
-                        lineWidth: 10.0,
+                        lineWidth: 12.0,
                         animation: true,
                         header: Text(
                           "Осталось",
@@ -135,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                           leading: Icon(
                             Icons.flag,
                             color: Colors.lightGreen,
+                            size: 30.0,
                           ),
                           title: Text(
                             '${goalProvider.name}',
@@ -147,6 +104,7 @@ class _HomePageState extends State<HomePage> {
                           leading: Icon(
                             Icons.attach_money,
                             color: Colors.lightGreen,
+                            size: 30.0,
                           ),
                           title: Text(
                             '${goalProvider.goalSum} ',
@@ -165,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                     color: MyColors.color3,
                     child: Container(
                       decoration: roundedContainerDecoration.copyWith(
-                        color: Colors.white,
+                        color: MyColors.color1,
                       ),
                       child: ListView.builder(
                         reverse: true,

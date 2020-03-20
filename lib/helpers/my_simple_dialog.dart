@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_money/providers/goal_provider.dart';
-import 'package:safe_money/services/local_transaction_service.dart';
 
 showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
   TextStyle ts = TextStyle(
@@ -46,7 +45,6 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
                     "sum": textEditingController.text,
                     "type": type
                   };
-                  await LocalTransactionService.addTransaction(transaction);
                   await Provider.of<GoalProvider>(context, listen: false)
                       .addTransaction(transaction, scaffoldKey);
                   Navigator.of(context).pop();
