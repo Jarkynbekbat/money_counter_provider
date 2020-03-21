@@ -7,11 +7,6 @@ class StatisticPage extends StatelessWidget {
   static String route = 'statistic';
   @override
   Widget build(BuildContext context) {
-    double averageSumPerDay =
-        Provider.of<GoalProvider>(context, listen: false).getAverageSumPerDay();
-    int daysCount = Provider.of<GoalProvider>(context, listen: false)
-        .getDaysCountBeforeGoal();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Статистика'),
@@ -21,19 +16,43 @@ class StatisticPage extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             ListTile(
-              leading: Text(
-                '$averageSumPerDay',
-                style: statisticCountStyle,
-              ),
+              leading: FutureBuilder(
+                  future: Provider.of<GoalProvider>(context, listen: false)
+                      .getAverageSumPerDay(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data.toString(),
+                        style: statisticCountStyle,
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
               title: Text(
                 'средний вклад в день',
                 style: textStyle,
               ),
             ),
             ListTile(
-              leading: daysCount != 0
-                  ? Text('$daysCount', style: statisticCountStyle)
-                  : Icon(Icons.all_inclusive, color: Colors.red),
+              leading: FutureBuilder(
+                future: Provider.of<GoalProvider>(context, listen: false)
+                    .getDaysCountBeforeGoal(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data != 0) {
+                      return Text(
+                        snapshot.data.toString(),
+                        style: statisticCountStyle,
+                      );
+                    } else {
+                      return Icon(Icons.all_inclusive, color: Colors.red);
+                    }
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
               title: Text(
                 'количество дней до достижения цели в таком темпе',
                 style: textStyle,

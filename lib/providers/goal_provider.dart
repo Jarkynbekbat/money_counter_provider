@@ -108,48 +108,26 @@ class GoalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  double getAverageSumPerDay() {
+  Future<double> getAverageSumPerDay() async {
     double averageSumPerDay = 0;
 
     try {
       if (this.transations.length == 0) {
         return 0;
       } else {
-        List<dynamic> onlyPlus =
-            this.transations.where((el) => el['type'] == '+').toList();
-        Set<String> uniqDates =
-            Set.from(onlyPlus.map((el) => el['date']).toList());
-        List<String> dates = List.from(uniqDates);
-        Map<String, double> averageSum = {};
-        for (String date in dates) {
-          this
-              .transations
-              .where((el) => el['date'] == date)
-              .toList()
-              .forEach((transation) {
-            double sum = double.parse(transation['sum']);
-            if (averageSum[date] == null) {
-              averageSum[date] = 0;
-            }
-            if (transation['type'] == '+') {
-              averageSum[date] += sum;
-            } else if (transation['type'] == '-') {
-              averageSum[date] -= sum;
-            }
-          });
-        }
-        for (String date in averageSum.keys) {
-          averageSumPerDay += averageSum[date];
-        }
-        return averageSumPerDay / averageSum.keys.length;
+        DateTime startDate = DateTime.parse(
+            json.decode((await LocalGoalService.getGoal()))['goalDatetime']);
+        int diffInDays = DateTime.now().difference(startDate).inDays + 1;
+        averageSumPerDay = this.haveSum / diffInDays;
+        return averageSumPerDay;
       }
     } catch (ex) {
       return 0.0;
     }
   }
 
-  int getDaysCountBeforeGoal() {
-    double averageSum = this.getAverageSumPerDay();
+  Future<int> getDaysCountBeforeGoal() async {
+    double averageSum = await this.getAverageSumPerDay();
 
     if (averageSum > 0) {
       int count = 0;
