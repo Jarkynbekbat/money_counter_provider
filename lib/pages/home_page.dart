@@ -4,6 +4,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_money/helpers/constants.dart';
 import 'package:safe_money/helpers/my_colors.dart';
+import 'package:safe_money/helpers/my_dialog_for_cancel_transaction.dart';
 import 'package:safe_money/helpers/my_simple_dialog.dart';
 import 'package:safe_money/pages/components/drawer.dart';
 import 'package:safe_money/providers/goal_provider.dart';
@@ -133,8 +134,17 @@ class _HomePageState extends State<HomePage> {
                             key: Key(
                                 goalProvider.transations[index]['datetime']),
                             onDismissed: (key) async {
-                              await goalProvider.cancelTransaction(
-                                  goalProvider.transations[index]);
+                              bool res = await showMyDialogForCancelTransaction(
+                                  context,
+                                  'Вы уверены?',
+                                  'это отменит транзакцию и вернет предыдущее состаяние',
+                                  'да',
+                                  'нет');
+                              if (res) {
+                                await goalProvider.cancelTransaction(
+                                    goalProvider.transations[index]);
+                              } else
+                                return;
                             },
                             child: ListTile(
                               leading:

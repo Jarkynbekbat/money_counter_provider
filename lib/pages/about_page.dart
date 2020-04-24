@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:safe_money/helpers/constants.dart';
-import 'package:safe_money/helpers/my_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {

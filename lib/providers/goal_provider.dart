@@ -135,7 +135,7 @@ class GoalProvider extends ChangeNotifier {
       do {
         tempSum += averageSum;
         count++;
-      } while (tempSum < this.goalSum);
+      } while (tempSum < this.needSum);
 
       return count;
     } else
