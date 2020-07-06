@@ -13,7 +13,6 @@ showMyDialogForCancelTransaction(
 
   bool _result = false;
   await EasyDialog(
-      cardColor: Theme.of(context).appBarTheme.color,
       closeButton: false,
       title: Text(title, style: tsTitle),
       description: Text(descreption),

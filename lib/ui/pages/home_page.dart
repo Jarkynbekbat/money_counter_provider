@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         footer: Text(
-                          '${goalProvider.goalSum - goalProvider.haveSum} ',
+                          '${goalProvider.goalSum - goalProvider.haveSum}',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         progressColor: Colors.red,
@@ -147,21 +147,20 @@ class _HomePageState extends State<HomePage> {
                         itemCount: goalProvider.transations.length,
                         itemBuilder: (context, index) {
                           return Dismissible(
-                            key: Key(
+                            key: ValueKey(
                                 goalProvider.transations[index]['datetime']),
-                            onDismissed: (key) async {
-                              bool res = await showMyDialogForCancelTransaction(
-                                  context,
-                                  'Вы уверены?',
-                                  'это отменит транзакцию и вернет предыдущее состаяние',
-                                  'да',
-                                  'нет');
-                              if (res) {
-                                await goalProvider.cancelTransaction(
-                                    goalProvider.transations[index]);
-                              } else
-                                return;
+                            confirmDismiss: (direction) async {
+                              return await _onDismissed(
+                                  context, goalProvider, index);
                             },
+                            background: Container(
+                              color: Colors.red,
+                              child: Icon(
+                                Icons.delete_outline,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
                             child: ListTile(
                               leading:
                                   goalProvider.transations[index]['type'] == "+"
@@ -223,6 +222,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  Future<bool> _onDismissed(
+      BuildContext context, GoalProvider goalProvider, int index) async {
+    bool res = await showMyDialogForCancelTransaction(context, 'Вы уверены?',
+        'это отменит транзакцию и вернет предыдущее состаяние', 'да', 'нет');
+    if (res) {
+      await goalProvider.cancelTransaction(goalProvider.transations[index]);
+      return true;
+    } else
+      return false;
   }
 
   Future<void> _logout() async {
