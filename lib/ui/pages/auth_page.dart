@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/my_colors.dart';
 import '../../helpers/screen.dart';
 import '../../providers/goal_provider.dart';
 import '../../ui/pages/home_page.dart';
@@ -14,14 +13,12 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.color1,
       body: Center(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Container(
             width: Screen.width(context) * 0.8,
             height: Screen.heigth(context) * 0.50,
-            color: MyColors.color3,
             child: Center(
               child: Wrap(
                 children: <Widget>[
@@ -54,7 +51,6 @@ class AuthPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: MyColors.color4,
         onPressed: () async {
           try {
             await Provider.of<GoalProvider>(context, listen: false).saveGoal(

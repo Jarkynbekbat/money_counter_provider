@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.16.1
 
   provider: ^4.0.4
   floating_action_row: ^0.1.0

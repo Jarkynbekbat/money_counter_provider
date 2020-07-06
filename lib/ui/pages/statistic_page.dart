@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:safe_money/helpers/constants.dart';
-import 'package:safe_money/providers/goal_provider.dart';
+
+import '../../providers/goal_provider.dart';
 
 class StatisticPage extends StatelessWidget {
   static String route = 'statistic';
+
   @override
   Widget build(BuildContext context) {
+    const statisticCountStyle = TextStyle(
+      fontSize: 25.0,
+      color: Colors.green,
+      fontWeight: FontWeight.bold,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Статистика'),
@@ -22,17 +29,14 @@ class StatisticPage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Text(
-                        snapshot.data.toString(),
+                        snapshot.data.toStringAsFixed(1),
                         style: statisticCountStyle,
                       );
                     } else {
                       return CircularProgressIndicator();
                     }
                   }),
-              title: Text(
-                'средний вклад в день',
-                style: textStyle,
-              ),
+              title: Text('средний вклад в день'),
             ),
             ListTile(
               leading: FutureBuilder(
@@ -42,7 +46,7 @@ class StatisticPage extends StatelessWidget {
                   if (snapshot.hasData) {
                     if (snapshot.data != 0) {
                       return Text(
-                        snapshot.data.toString(),
+                        snapshot.data.toStringAsFixed(1),
                         style: statisticCountStyle,
                       );
                     } else {
@@ -53,10 +57,7 @@ class StatisticPage extends StatelessWidget {
                   }
                 },
               ),
-              title: Text(
-                'количество дней до достижения цели в таком темпе',
-                style: textStyle,
-              ),
+              title: Text('количество дней до достижения цели в таком темпе'),
             ),
           ],
         ),

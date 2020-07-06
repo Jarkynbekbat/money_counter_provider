@@ -1,14 +1,15 @@
+import 'package:easy_dialog/easy_dialog.dart';
 import 'package:floating_action_row/floating_action_row.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/constants.dart';
-import '../../helpers/my_colors.dart';
 import '../../helpers/my_dialog_for_cancel_transaction.dart';
 import '../../helpers/my_simple_dialog.dart';
-import '../../ui/widgets/drawer.dart';
 import '../../providers/goal_provider.dart';
+import 'about_page.dart';
+import 'auth_page.dart';
+import 'statistic_page.dart';
 
 class HomePage extends StatefulWidget {
   static String route = 'home';
@@ -21,13 +22,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    const roundedContainerDecoration = BoxDecoration(
+      color: Color(0xFFE9EEF9),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+    );
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
-      drawer: MyDrawer(),
       appBar: AppBar(
-        title: Text('Мой учет'),
-        actions: [],
+        title: Text('  Мой учет'),
+        actions: [
+          IconButton(icon: Icon(Icons.insert_chart), onPressed: _goToStatistic),
+          IconButton(
+              icon: Icon(Icons.question_answer), onPressed: _goToAboutUs),
+          IconButton(icon: Icon(Icons.exit_to_app), onPressed: _logout),
+        ],
       ),
       body: Consumer<GoalProvider>(
         builder: (context, goalProvider, _) {
@@ -46,15 +59,16 @@ class _HomePageState extends State<HomePage> {
                         animation: true,
                         header: Text(
                           "Накоплено",
-                          style: textStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         percent: (goalProvider.precent / 100),
                         center: Text(
-                            "${goalProvider.precent.toStringAsFixed(1)}%",
-                            style: textStyle),
+                          "${goalProvider.precent.toStringAsFixed(1)}%",
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                         footer: Text(
-                          '${goalProvider.haveSum} ',
-                          style: textStyle,
+                          '${goalProvider.haveSum}',
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         progressColor: Colors.green,
                       ),
@@ -64,15 +78,16 @@ class _HomePageState extends State<HomePage> {
                         animation: true,
                         header: Text(
                           "Осталось",
-                          style: textStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         percent: 1 - (goalProvider.precent / 100),
                         center: Text(
-                            "${(100 - goalProvider.precent).toStringAsFixed(1)}%",
-                            style: textStyle),
+                          "${(100 - goalProvider.precent).toStringAsFixed(1)}%",
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                         footer: Text(
                           '${goalProvider.goalSum - goalProvider.haveSum} ',
-                          style: textStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         progressColor: Colors.red,
                       ),
@@ -82,9 +97,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    decoration: roundedContainerDecoration.copyWith(
-                      color: MyColors.color3,
-                    ),
+                    decoration: roundedContainerDecoration,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -92,27 +105,29 @@ class _HomePageState extends State<HomePage> {
                         ListTile(
                           leading: Icon(
                             Icons.flag,
-                            color: Colors.lightGreen,
+                            color: Colors.blueGrey[700],
                             size: 30.0,
                           ),
                           title: Text(
                             '${goalProvider.name}',
-                            style: textStyle.copyWith(
-                              color: MyColors.color1,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(color: Colors.blueGrey[700]),
                           ),
                         ),
                         ListTile(
                           leading: Icon(
                             Icons.attach_money,
-                            color: Colors.lightGreen,
+                            color: Colors.blueGrey[700],
                             size: 30.0,
                           ),
                           title: Text(
                             '${goalProvider.goalSum} ',
-                            style: textStyle.copyWith(
-                              color: MyColors.color1,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(color: Colors.blueGrey[700]),
                           ),
                         ),
                       ],
@@ -122,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   flex: 4,
                   child: Container(
-                    color: MyColors.color3,
+                    color: Color(0xFFE9EEF9),
                     child: Container(
                       decoration: roundedContainerDecoration.copyWith(
                         color: Colors.white,
@@ -160,10 +175,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                               title: Text(
                                 '${goalProvider.transations[index]['date']}',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context).textTheme.bodyText1,
                               ),
                               subtitle: Text(
                                 goalProvider.transations[index]['time'],
@@ -173,13 +185,16 @@ class _HomePageState extends State<HomePage> {
                               ),
                               trailing: Text(
                                 '${goalProvider.transations[index]['type']}${goalProvider.transations[index]['sum']} ',
-                                style: textStyle.copyWith(
-                                  color: goalProvider.transations[index]
-                                              ['type'] ==
-                                          '+'
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .copyWith(
+                                      color: goalProvider.transations[index]
+                                                  ['type'] ==
+                                              '+'
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
                               ),
                             ),
                           );
@@ -194,20 +209,58 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionRow(
-        color: MyColors.color3,
         children: [
           FloatingActionRowButton(
             icon: Icon(Icons.add),
             onTap: () => showMyDialog(
-                context, 'положить деньги', 'ок', 'отмена', '+', _scaffoldKey),
+                context, 'Положить деньги', 'ок', 'отмена', '+', _scaffoldKey),
           ),
           FloatingActionRowButton(
             icon: Icon(Icons.remove),
             onTap: () => showMyDialog(
-                context, 'взять деньги', 'ок', 'отмена', '-', _scaffoldKey),
+                context, 'Взять деньги', 'ок', 'отмена', '-', _scaffoldKey),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _logout() async {
+    await EasyDialog(
+      title: Text('Вы уверены что хотите прервать учет ?'),
+      height: 200,
+      closeButton: false,
+      contentList: [
+        OutlineButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0)),
+          child: Text(
+            'да,прервать',
+          ),
+          onPressed: () {
+            Provider.of<GoalProvider>(context, listen: false).logout();
+            Navigator.of(context).pushNamed(AuthPage.route);
+          },
+        ),
+        OutlineButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0)),
+          child: Text(
+            'нет,вернуться',
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    ).show(context);
+  }
+
+  void _goToStatistic() {
+    Navigator.pushNamed(context, StatisticPage.route);
+  }
+
+  void _goToAboutUs() {
+    Navigator.pushNamed(context, AboutPage.route);
   }
 }

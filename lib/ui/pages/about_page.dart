@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:safe_money/helpers/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
@@ -13,29 +12,38 @@ class AboutPage extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(30.0),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
-            'Приложение "Мой учет" предназначено помочь людям вести учет накопления,смотреть статистику , прогнозировать , приложение находится на стадии разработки поэтому если у вас возникли проблемы , просьба сообщить нам нажав на кнопку ниже.',
-            textAlign: TextAlign.center,
-            style: textStyle,
-          ),
-          Container(
-            child: OutlineButton(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Приложение "Мой учет" предназначено помочь людям вести учет накопления,смотреть статистику , прогнозировать , приложение находится на стадии разработки поэтому если у вас возникли проблемы , просьба сообщить нам нажав на кнопку ниже.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            SizedBox(height: 30.0),
+            OutlineButton(
               color: Colors.white,
               disabledBorderColor: Colors.white,
               textColor: Colors.black,
               onPressed: () => openUrl('mailto:jarkynbekbat@gmail.com'),
               child: Text(
                 'Напишите нам',
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1.color,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
-          ),
-        ]),
+            OutlineButton(
+              color: Colors.white,
+              disabledBorderColor: Colors.white,
+              textColor: Colors.black,
+              onPressed: () => openUrl(
+                  'https://github.com/Jarkynbekbat/money_counter_provider'),
+              child: Text(
+                'GitHub',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
