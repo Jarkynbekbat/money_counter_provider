@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:safe_money/services/local_goal_service.dart';
-import 'package:safe_money/services/local_transaction_service.dart';
+
+import '../data/services/local_goal_service.dart';
+import '../data/services/local_transaction_service.dart';
 
 class GoalProvider extends ChangeNotifier {
   String name;

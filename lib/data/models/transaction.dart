@@ -1,6 +1,4 @@
-import 'package:safe_money/models/model.dart';
-
-class Transaction extends Model {
+class Transaction {
   static String table = 'transaction';
 
   int id;

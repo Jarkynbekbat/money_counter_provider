@@ -3,12 +3,12 @@ import 'package:easy_dialog/easy_dialog.dart';
 
 showMyDialogForCancelTransaction(
     context, title, descreption, ok, cancel) async {
-  TextStyle ts =
-      TextStyle(fontSize: 15, color: Theme.of(context).textTheme.body1.color);
+  TextStyle ts = TextStyle(
+      fontSize: 15, color: Theme.of(context).textTheme.bodyText1.color);
   TextStyle tsTitle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.bold,
-    color: Theme.of(context).textTheme.body1.color,
+    color: Theme.of(context).textTheme.bodyText1.color,
   );
 
   bool _result = false;

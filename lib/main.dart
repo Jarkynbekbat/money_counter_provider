@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:safe_money/helpers/my_colors.dart';
-import 'package:safe_money/pages/about_page.dart';
-import 'package:safe_money/pages/auth_page.dart';
-import 'package:safe_money/pages/statistic_page.dart';
-import 'package:safe_money/providers/goal_provider.dart';
-import 'package:safe_money/services/local_goal_service.dart';
-import 'pages/home_page.dart';
+
+import 'helpers/my_colors.dart';
+import 'ui/pages/home_page.dart';
+import 'providers/goal_provider.dart';
+import 'data/services/local_goal_service.dart';
+import 'ui/pages/about_page.dart';
+import 'ui/pages/auth_page.dart';
+import 'ui/pages/statistic_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

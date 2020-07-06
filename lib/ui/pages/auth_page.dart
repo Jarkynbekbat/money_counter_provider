@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:safe_money/helpers/my_colors.dart';
-import 'package:safe_money/helpers/screen.dart';
-import 'package:safe_money/pages/home_page.dart';
-import 'package:safe_money/providers/goal_provider.dart';
+
+import '../../helpers/my_colors.dart';
+import '../../helpers/screen.dart';
+import '../../providers/goal_provider.dart';
+import '../../ui/pages/home_page.dart';
 
 class AuthPage extends StatelessWidget {
   static String route = 'auth';

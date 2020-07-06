@@ -15,12 +15,9 @@ class AboutPage extends StatelessWidget {
         padding: const EdgeInsets.all(30.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
-            '''
-              Приложение "Мой учет" предназначено помочь людям вести
-учет накопления,смотреть статистику , прогнозировать , приложение находится на стадии разработки поэтому если у вас возникли проблемы , просьба сообщить нам нажав на кнопку ниже.
-              ''',
+            'Приложение "Мой учет" предназначено помочь людям вести учет накопления,смотреть статистику , прогнозировать , приложение находится на стадии разработки поэтому если у вас возникли проблемы , просьба сообщить нам нажав на кнопку ниже.',
+            textAlign: TextAlign.center,
             style: textStyle,
-            softWrap: true,
           ),
           Container(
             child: OutlineButton(
@@ -31,7 +28,7 @@ class AboutPage extends StatelessWidget {
               child: Text(
                 'Напишите нам',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.body1.color,
+                  color: Theme.of(context).textTheme.bodyText1.color,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

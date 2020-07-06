@@ -2,12 +2,13 @@ import 'package:floating_action_row/floating_action_row.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:safe_money/helpers/constants.dart';
-import 'package:safe_money/helpers/my_colors.dart';
-import 'package:safe_money/helpers/my_dialog_for_cancel_transaction.dart';
-import 'package:safe_money/helpers/my_simple_dialog.dart';
-import 'package:safe_money/pages/components/drawer.dart';
-import 'package:safe_money/providers/goal_provider.dart';
+
+import '../../helpers/constants.dart';
+import '../../helpers/my_colors.dart';
+import '../../helpers/my_dialog_for_cancel_transaction.dart';
+import '../../helpers/my_simple_dialog.dart';
+import '../../ui/widgets/drawer.dart';
+import '../../providers/goal_provider.dart';
 
 class HomePage extends StatefulWidget {
   static String route = 'home';

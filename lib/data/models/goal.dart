@@ -1,6 +1,4 @@
-import 'package:safe_money/models/model.dart';
-
-class Goal extends Model {
+class Goal {
   static String table = 'goal';
 
   int id, sum, haveSum, needSum;
