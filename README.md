@@ -3,8 +3,8 @@ A mobile application that will help keep track of the accumulation of money will
 
 ## UI
 <p align="center">
-  <img src="https://github.com/Jarkynbekbat/money_counter_provider/blob/master/assets/screenshots/screenshot_1.jpg" width="350">
-  <img src="https://github.com/Jarkynbekbat/money_counter_provider/blob/master/assets/screenshots/screenshot_2.jpg" width="350">
+  <img src="https://github.com/Jarkynbekbat/money_counter_provider/blob/master/assets/screenshots/photo_2020-07-06_22-13-35.jpg" width="350">
+  <img src="https://github.com/Jarkynbekbat/money_counter_provider/blob/master/assets/screenshots/photo_2020-07-06_22-13-51.jpg" width="350">
 </p>
 
 ## Getting Started
