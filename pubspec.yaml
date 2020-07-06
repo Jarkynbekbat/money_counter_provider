@@ -1,5 +1,5 @@
 name: safe_money
-description: (Application for accounting for money accumulation) Приложение для учета накопления денег.
+description: A mobile application that will help keep track of the accumulation of money will also help predict and calculate an approximate date before reaching a certain amount at the current pace.
 
 version: 1.0.0+1
 

@@ -1,5 +1,7 @@
 # safe_money
 
+A mobile application that will help keep track of the accumulation of money will also help predict and calculate an approximate date before reaching a certain amount at the current pace.
+
 A new Flutter project.
 
 ## Getting Started
