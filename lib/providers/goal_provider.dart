@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../data/models/page_models/statistic_screen_model.dart';
 import '../data/services/local_goal_service.dart';
 import '../data/services/local_transaction_service.dart';
 
@@ -110,9 +111,25 @@ class GoalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<double> getAverageSumPerDay() async {
-    double averageSumPerDay = 0;
+  Future<StatisticScreenModel> getStatisticData() async {
+    var statisticData = StatisticScreenModel();
+    statisticData.averageSumPerDay = await _getAverageSum();
+    int days = await _getDays();
 
+    int years = days ~/ 365;
+    days = days % 365;
+    int months = days ~/ 30;
+    days = days % 30;
+
+    statisticData.days = days;
+    statisticData.months = months;
+    statisticData.years = years;
+
+    return statisticData;
+  }
+
+  Future<double> _getAverageSum() async {
+    double averageSumPerDay = 0;
     try {
       if (this.transations.length == 0) {
         return 0;
@@ -128,9 +145,8 @@ class GoalProvider extends ChangeNotifier {
     }
   }
 
-  Future<int> getDaysCountBeforeGoal() async {
-    double averageSum = await this.getAverageSumPerDay();
-
+  Future<int> _getDays() async {
+    double averageSum = await this._getAverageSum();
     if (averageSum > 0) {
       int count = 0;
       double tempSum = 0;
@@ -138,7 +154,6 @@ class GoalProvider extends ChangeNotifier {
         tempSum += averageSum;
         count++;
       } while (tempSum < this.needSum);
-
       return count;
     } else
       return 0;
