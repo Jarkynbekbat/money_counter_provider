@@ -29,6 +29,7 @@ class GoalProvider extends ChangeNotifier {
       this.goalSum = object['goalSum'];
       this.haveSum = object['haveSum'];
       this.needSum = object['needSum'];
+
       this.precent = this.haveSum / this.goalSum * 100;
       List<String> transations =
           await LocalTransactionService.getTransactions() ?? [];

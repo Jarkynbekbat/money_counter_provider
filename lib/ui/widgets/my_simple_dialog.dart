@@ -45,16 +45,13 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
                 try {
                   initializeDateFormatting();
                   DateTime now = DateTime.now();
-                  String formatedTime = DateFormat.Hm('RU_ru').format(now);
-                  String formatedDate =
-                      DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY, 'RU_ru')
-                          .format(now)
-                          .toString();
+                  String formatedTime = DateFormat.Hm(
+                    Localizations.localeOf(context).toString(),
+                  ).format(now);
 
                   int.parse(textEditingController.text);
                   Map<String, dynamic> transaction = {
                     "datetime": now.toString(),
-                    "date": formatedDate,
                     "time": formatedTime,
                     "sum": textEditingController.text,
                     "type": type
@@ -72,8 +69,8 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
             Container(
               margin: EdgeInsets.only(left: 5),
               child: OutlineButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   cancel,
                   style: ts,

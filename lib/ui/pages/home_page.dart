@@ -1,6 +1,8 @@
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:floating_action_row/floating_action_row.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_money/localization/get_value.dart';
@@ -79,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Consumer<GoalProvider>(
-        builder: (context, goalProvider, _) {
+        builder: (context, goalProvider, child) {
           return Container(
             child: Column(
               children: [
@@ -182,6 +184,15 @@ class _HomePageState extends State<HomePage> {
                         reverse: true,
                         itemCount: goalProvider.transations.length,
                         itemBuilder: (context, index) {
+                          Locale myLocale = Localizations.localeOf(context);
+                          DateTime date = DateTime.parse(
+                              goalProvider.transations[index]['datetime']);
+                          String formatedDate = DateFormat(
+                                  DateFormat.YEAR_ABBR_MONTH_DAY,
+                                  myLocale.toString())
+                              .format(date)
+                              .toString();
+
                           return Dismissible(
                             key: ValueKey(
                                 goalProvider.transations[index]['datetime']),
@@ -209,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                                           color: Colors.red,
                                         ),
                               title: Text(
-                                '${goalProvider.transations[index]['date']}',
+                                '$formatedDate',
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               subtitle: Text(
