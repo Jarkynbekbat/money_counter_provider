@@ -4,7 +4,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/goal_provider.dart';
+import '../../data/providers/goal_provider.dart';
+import '../../localization/get_value.dart';
 
 showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
   const TextStyle ts = TextStyle(
@@ -25,7 +26,7 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
           controller: textEditingController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            labelText: 'введите сумму',
+            labelText: getValue(context, 'inputHint'),
           ),
         ),
         const SizedBox(height: 20.0),
@@ -34,7 +35,8 @@ showMyDialog(context, title, ok, cancel, type, scaffoldKey) async {
           children: <Widget>[
             OutlineButton(
               shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
               child: Text(
                 ok,
                 style: ts,

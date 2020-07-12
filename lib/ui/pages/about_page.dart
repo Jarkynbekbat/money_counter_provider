@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/get_value.dart';
+
 class AboutPage extends StatelessWidget {
   static String route = 'about';
 
@@ -8,7 +10,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('О приложении'),
+        title: Text(getValue(context, 'aboutTitle')),
       ),
       body: Container(
         padding: const EdgeInsets.all(30.0),
@@ -16,7 +18,7 @@ class AboutPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Приложение "Мой учет" предназначено помочь людям вести учет накопления,смотреть статистику , прогнозировать , приложение находится на стадии разработки поэтому если у вас возникли проблемы , просьба сообщить нам нажав на кнопку ниже.',
+              getValue(context, 'about'),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText1,
             ),
@@ -27,7 +29,7 @@ class AboutPage extends StatelessWidget {
               textColor: Colors.black,
               onPressed: () => openUrl('mailto:jarkynbekbat@gmail.com'),
               child: Text(
-                'Напишите нам',
+                getValue(context, 'textUs'),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),

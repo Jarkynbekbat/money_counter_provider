@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/screen.dart';
-import '../../providers/goal_provider.dart';
+import '../../data/providers/goal_provider.dart';
+import '../../data/services/screen.dart';
+import '../../localization/get_value.dart';
 import '../../ui/pages/home_page.dart';
 
 class AuthPage extends StatelessWidget {
@@ -27,8 +28,8 @@ class AuthPage extends StatelessWidget {
                     child: TextField(
                       controller: goalNameController,
                       decoration: InputDecoration(
-                        hintText: 'введите цель',
-                        labelText: 'цель',
+                        hintText: getValue(context, 'inputGoal'),
+                        labelText: getValue(context, 'goal'),
                       ),
                     ),
                   ),
@@ -39,8 +40,8 @@ class AuthPage extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       controller: goalSumController,
                       decoration: InputDecoration(
-                        hintText: 'введите сумму',
-                        labelText: 'cумма',
+                        hintText: getValue(context, 'inputHint'),
+                        labelText: getValue(context, 'sum'),
                       ),
                     ),
                   )

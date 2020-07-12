@@ -1,0 +1,29 @@
+{
+  "goal": "Goal",
+  "sum": "Sum",
+  "inputGoal": "enter goal",
+
+  "title": " My accounting",
+  "accumulated": "accumulated",
+  "нaveToSave": "have to save",
+
+  "put": "put money",
+  "take": "take money",
+  "inputHint": "enter sum",
+  "ok": "ok",
+  "cancel": "cancel",
+
+  "statisticTitle": "Statistic",
+  "avarageSum": "average contribution per day",
+  "beforeGoalTitle": "* Before achieving the goal at that pace",
+  "beforeDays": "days",
+  "beforeMonths": "months",
+  "beforeYears": "years",
+
+  "aboutTitle": "About app",
+  "about": "The application 'My Accounting' is designed to help people keep records of accumulation, look at statistics, forecast, the application is under development therefore if you have any problems, please inform us by clicking on the button below.",
+  "textUs": "text us",
+
+  "transactionTitle": "Are you sure ?",
+  "transactionSubtitle": "this cancels the transaction and returns the previous state"
+}

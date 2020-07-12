@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_money/localization/get_value.dart';
 
 import '../../data/models/page_models/statistic_screen_model.dart';
-import '../../providers/goal_provider.dart';
+import '../../data/providers/goal_provider.dart';
 
 class StatisticPage extends StatelessWidget {
   static String route = 'statistic';
@@ -17,7 +18,7 @@ class StatisticPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Статистика'),
+        title: Text(getValue(context, 'statisticTitle')),
       ),
       body: Container(
         // padding: EdgeInsets.all(12.0),
@@ -33,11 +34,11 @@ class StatisticPage extends StatelessWidget {
                       snapshot.data.averageSumPerDay.toStringAsFixed(1),
                       style: statisticCountStyle,
                     ),
-                    title: const Text('средний вклад в день'),
+                    title: Text(getValue(context, 'avarageSum')),
                   ),
                   const Divider(),
-                  const Text(
-                    '* До достижения цели в таком темпе',
+                  Text(
+                    getValue(context, 'beforeGoalTitle'),
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -49,7 +50,7 @@ class StatisticPage extends StatelessWidget {
                         snapshot.data.years.toString(),
                         style: statisticCountStyle,
                       ),
-                      title: Text('количество лет'),
+                      title: Text(getValue(context, 'beforeYears')),
                     ),
                   if (snapshot.data.months != 0)
                     ListTile(
@@ -57,7 +58,7 @@ class StatisticPage extends StatelessWidget {
                         snapshot.data.months.toString(),
                         style: statisticCountStyle,
                       ),
-                      title: Text('количество месяцев'),
+                      title: Text(getValue(context, 'beforeMonths')),
                     ),
                   ListTile(
                     leading: snapshot.data.days == 0
@@ -66,7 +67,7 @@ class StatisticPage extends StatelessWidget {
                             snapshot.data.days.toString(),
                             style: statisticCountStyle,
                           ),
-                    title: Text('количество дней'),
+                    title: Text(getValue(context, 'beforeDays')),
                   ),
 
                   // return

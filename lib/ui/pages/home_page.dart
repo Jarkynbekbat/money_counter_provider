@@ -3,10 +3,12 @@ import 'package:floating_action_row/floating_action_row.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_money/localization/get_value.dart';
 
-import '../../helpers/my_dialog_for_cancel_transaction.dart';
-import '../../helpers/my_simple_dialog.dart';
-import '../../providers/goal_provider.dart';
+import '../../data/providers/goal_provider.dart';
+import '../../main.dart';
+import '../widgets/my_dialog_for_cancel_transaction.dart';
+import '../widgets/my_simple_dialog.dart';
 import 'about_page.dart';
 import 'auth_page.dart';
 import 'statistic_page.dart';
@@ -19,6 +21,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  void _changeLanguage(Locale language) {
+    Locale _temp;
+    switch (language.languageCode) {
+      case 'en':
+        _temp = Locale(language.languageCode, 'US');
+        break;
+      case 'ru':
+        _temp = Locale(language.languageCode, 'RU');
+        break;
+      default:
+        _temp = Locale(language.languageCode, 'US');
+    }
+    MyApp.setLocale(context, _temp);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +50,31 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('  Мой учет'),
+        title: Text(getValue(context, 'title')),
         actions: [
           IconButton(icon: Icon(Icons.insert_chart), onPressed: _goToStatistic),
           IconButton(
               icon: Icon(Icons.question_answer), onPressed: _goToAboutUs),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton(
+              selectedItemBuilder: (context) => [Text('')],
+              items: [
+                DropdownMenuItem(
+                  child: Text('RU'),
+                  value: Locale('ru', 'RU'),
+                ),
+                DropdownMenuItem(
+                  child: Text('EN'),
+                  value: Locale('en', 'US'),
+                ),
+              ],
+              onChanged: (Locale language) {
+                _changeLanguage(language);
+              },
+              icon: Icon(Icons.language, color: Colors.white),
+            ),
+          ),
           IconButton(icon: Icon(Icons.exit_to_app), onPressed: _logout),
         ],
       ),
@@ -58,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                         lineWidth: 12.0,
                         animation: true,
                         header: Text(
-                          "Накоплено",
+                          getValue(context, 'accumulated'),
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         percent: (goalProvider.precent / 100),
@@ -77,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                         lineWidth: 12.0,
                         animation: true,
                         header: Text(
-                          "Осталось",
+                          getValue(context, 'нaveToSave'),
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         percent: 1 - (goalProvider.precent / 100),
@@ -212,12 +248,22 @@ class _HomePageState extends State<HomePage> {
           FloatingActionRowButton(
             icon: Icon(Icons.add),
             onTap: () => showMyDialog(
-                context, 'Положить деньги', 'ок', 'отмена', '+', _scaffoldKey),
+                context,
+                getValue(context, 'put'),
+                getValue(context, 'ok'),
+                getValue(context, 'cancel'),
+                '+',
+                _scaffoldKey),
           ),
           FloatingActionRowButton(
             icon: Icon(Icons.remove),
             onTap: () => showMyDialog(
-                context, 'Взять деньги', 'ок', 'отмена', '-', _scaffoldKey),
+                context,
+                getValue(context, 'take'),
+                getValue(context, 'ok'),
+                getValue(context, 'cancel'),
+                '-',
+                _scaffoldKey),
           ),
         ],
       ),
@@ -226,8 +272,13 @@ class _HomePageState extends State<HomePage> {
 
   Future<bool> _onDismissed(
       BuildContext context, GoalProvider goalProvider, int index) async {
-    bool res = await showMyDialogForCancelTransaction(context, 'Вы уверены?',
-        'это отменит транзакцию и вернет предыдущее состаяние', 'да', 'нет');
+    bool res = await showMyDialogForCancelTransaction(
+      context,
+      getValue(context, 'transactionTitle'),
+      getValue(context, 'transactionSubtitle'),
+      getValue(context, 'ok'),
+      getValue(context, 'cancel'),
+    );
     if (res) {
       await goalProvider.cancelTransaction(goalProvider.transations[index]);
       return true;
@@ -237,16 +288,14 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _logout() async {
     await EasyDialog(
-      title: Text('Вы уверены что хотите прервать учет ?'),
+      title: Text(getValue(context, 'transactionTitle')),
       height: 200,
       closeButton: false,
       contentList: [
         OutlineButton(
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0)),
-          child: Text(
-            'да,прервать',
-          ),
+          child: Text(getValue(context, 'ok')),
           onPressed: () {
             Provider.of<GoalProvider>(context, listen: false).logout();
             Navigator.of(context).pushNamed(AuthPage.route);
@@ -255,9 +304,7 @@ class _HomePageState extends State<HomePage> {
         OutlineButton(
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0)),
-          child: Text(
-            'нет,вернуться',
-          ),
+          child: Text(getValue(context, 'cancel')),
           onPressed: () {
             Navigator.pop(context);
           },
