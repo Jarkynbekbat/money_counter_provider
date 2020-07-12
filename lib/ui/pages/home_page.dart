@@ -1,13 +1,12 @@
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:floating_action_row/floating_action_row.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:safe_money/localization/get_value.dart';
 
 import '../../data/providers/goal_provider.dart';
+import '../../localization/get_value.dart';
 import '../../main.dart';
 import '../widgets/my_dialog_for_cancel_transaction.dart';
 import '../widgets/my_simple_dialog.dart';
